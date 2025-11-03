@@ -1,0 +1,107 @@
+========================================================
+           Assignment 4 — Smart City / Smart Campus Scheduling
+========================================================
+
+Course: Design and Analysis of Algorithms (DAA)
+Student: Tazhibayev Marsel
+Year: 2025
+Project Title: Graph Algorithms Integration — SCC, Topological Sort, DAG Shortest Paths
+
+--------------------------------------------------------
+1. Introduction
+--------------------------------------------------------
+The objective of this project is to integrate three main graph algorithms
+to model task scheduling in a Smart City / Smart Campus environment:
+1. Strongly Connected Components (SCC) detection using Tarjan’s algorithm.
+2. Topological Ordering for DAGs derived from SCC condensation.
+3. Shortest and Longest Path computations for task scheduling over DAGs.
+
+The system simulates dependencies between city service tasks such as
+maintenance, street cleaning, and sensor/camera repairs.
+
+--------------------------------------------------------
+2. Objectives
+--------------------------------------------------------
+1. Detect cycles in the task dependency graph and compress them into SCCs.
+2. Build a condensation graph (DAG of SCCs) for acyclic scheduling.
+3. Compute topological order for task execution planning.
+4. Find shortest paths (minimum duration) and longest paths (critical path) in DAGs.
+5. Generate multiple test datasets (small, medium, large) to evaluate performance.
+
+--------------------------------------------------------
+3. Methodology
+--------------------------------------------------------
+Programming Language: Java 17
+Build Tool: Apache Maven
+Dependencies: Jackson (JSON parsing)
+
+Modules Implemented:
+- org.example.scc
+  - Graph.java        — Graph structure with vertices and edges
+  - TarjanSCC.java    — Detects strongly connected components
+  - Condensation.java — Builds DAG of SCCs
+- org.example.topo
+  - TopologicalSort.java — Computes topological order of DAG
+- org.example.dagsp
+  - DagShortestPaths.java — Computes shortest and longest paths on DAG
+- org.example.util
+  - Metrics.java      — Tracks execution time and operations
+  - DataLoader.java   — Loads JSON datasets
+- org.example.gen
+  - DatasetGenerator.java — Generates test graphs (small, medium, large)
+
+--------------------------------------------------------
+4. Dataset Summary
+--------------------------------------------------------
+Category | Nodes (n) | Edges | Type      | Cyclic | Description
+---------|------------|-------|-----------|--------|-----------------------------
+small1  | 6          | 8     | Mixed     | Yes    | Simple SCC + linear DAG
+small2  | 8          | 10    | DAG       | No     | Linear dependencies
+small3  | 10         | 15    | Mixed     | Yes    | Two SCCs present
+medium1 | 15         | 25    | Mixed     | Yes    | Moderate cycles
+medium2 | 18         | 30    | DAG       | No     | Dense DAG
+medium3 | 20         | 40    | Mixed     | Yes    | Multiple SCCs
+large1  | 30         | 80    | Mixed     | Yes    | Performance test
+large2  | 40         | 120   | DAG       | No     | Complex DAG
+large3  | 50         | 160   | Mixed     | Yes    | Stress test
+
+--------------------------------------------------------
+5. Results Summary (Example)
+--------------------------------------------------------
+Graph | SCCs | Topo Sort (ms) | Shortest Path (ms) | Longest Path (ms)
+------|------|----------------|-------------------|------------------
+small1 | 2    | 0.3            | 0.2               | 0.3
+medium1| 3    | 0.6            | 0.5               | 0.7
+large3 | 5    | 1.9            | 1.8               | 2.4
+
+Example Critical Path (large2):
+Source: Node 4
+Path: 4 → 7 → 11 → 13 → 19 → 25
+Length: 38
+
+--------------------------------------------------------
+6. Analysis
+--------------------------------------------------------
+- TarjanSCC efficiently identifies cycles and compresses them into SCCs.
+- Condensation + Topological Sort ensures valid task execution order.
+- DP-based DAG shortest paths minimize scheduling times.
+- Longest path analysis identifies critical tasks (bottlenecks).
+
+Performance decreases slightly with dense graphs due to more relaxations,
+but overall remains linear with respect to O(V + E).
+
+--------------------------------------------------------
+7. Conclusions
+--------------------------------------------------------
+- SCC detection is essential for cyclic dependencies.
+- Topological sorting ensures tasks are executed in the correct order.
+- DAG shortest/longest path algorithms provide optimal and critical scheduling insights.
+- Recommended to always run SCC compression before scheduling.
+
+--------------------------------------------------------
+8. References
+--------------------------------------------------------
+- Tarjan, R. (1972). Depth-First Search and Linear Graph Algorithms.
+- Cormen et al., Introduction to Algorithms (CLRS), 4th Edition.
+- Kahn, A. (1962). Topological sorting of large networks.
+- Assignment 4 Project Specification, Fall 2025.
